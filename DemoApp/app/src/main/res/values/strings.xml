@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DemoApp</string>
+    <string name="btn_next_label">Next</string>
 </resources>
