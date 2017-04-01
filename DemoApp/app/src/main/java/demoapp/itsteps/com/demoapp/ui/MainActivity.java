@@ -1,4 +1,4 @@
-package demoapp.itsteps.com.demoapp;
+package demoapp.itsteps.com.demoapp.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import demoapp.itsteps.com.demoapp.R;
 
 /**
  * Created by dhashimov on 3/18/17.

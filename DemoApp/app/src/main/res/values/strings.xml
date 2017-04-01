@@ -1,4 +1,35 @@
 <resources>
     <string name="app_name">DemoApp</string>
     <string name="btn_next_label">Next</string>
+    <string name="mount_vesuvius">Mount Vesuvius</string>
+    <string name="vulcanos_information">Mount Vesuvius (pronunciation: /vᵻˈsuːviəs/; Italian: Monte
+        Vesuvio [ˈmonte veˈzuːvjo]; Neapolitan: Vesuvio; Latin: Mons Vesuvius [mõːs wɛˈsʊwɪ.ʊs];
+        also Vesevus or Vesaevus in some Roman sources)[1] is a somma-stratovolcano located on the
+        Gulf of Naples in Campania, Italy, about 9 km (5.6 mi) east of Naples and a short distance
+        from the shore. It is one of several volcanoes which form the Campanian volcanic arc.
+        Vesuvius consists of a large cone partially encircled by the steep rim of a summit caldera
+        caused by the collapse of an earlier and originally much higher structure. Mount Vesuvius is
+        best known for its eruption in AD 79 that led to the burying and destruction of the Roman
+        cities of Pompeii and Herculaneum, as well as several other settlements. The eruption
+        ejected a cloud of stones, ashes and volcanic gases to a height of 33 km (21 mi), spewing
+        molten rock and pulverized pumice at the rate of 6×105 cubic metres (7.8×105 cu yd) per
+        second,[2] ultimately releasing a hundred thousand times the thermal energy released by the
+        Hiroshima-Nagasaki bombings.[3] More than 1,000 people died in the eruption, but exact
+        numbers are unknown. The only surviving eyewitness account of the event consists of two
+        letters by Pliny the Younger to the historian Tacitus.[4] Vesuvius has erupted many times
+        since and is the only volcano on the European mainland to have erupted within the last
+        hundred years. Today, it is regarded as one of the most dangerous volcanoes in the world
+        because of the population of 3,000,000 people living nearby and its tendency towards
+        violent, explosive eruptions of the Plinian type, making it the most densely populated
+        volcanic region in the world.[5]
+    </string>
+    <string name="title_activity_edit">EditActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
