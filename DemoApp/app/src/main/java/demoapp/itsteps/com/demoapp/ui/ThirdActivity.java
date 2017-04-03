@@ -59,7 +59,7 @@ public class ThirdActivity extends AppCompatActivity {
         String[] userAvatars = {"https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAALbAAAAJDI3MDBhNTRkLTY0YTktNDc1ZS1hODFmLWExYmFlZGYyN2FjMg.jpg",
                 "http://top-10-list.org/wp-content/uploads/2013/04/Rowan-Atkinson.jpg", "http://cdn.redmondpie.com/wp-content/uploads/2011/07/zuckerberg.jpg"};
         for (int i = 0; i <= 100; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(0, 2 + 1);
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 3);
             User user = new User(userName[randomNum], userAddres[randomNum], userAvatars[randomNum]);
             list.add(user);
         }

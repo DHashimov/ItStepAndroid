@@ -41,7 +41,10 @@ public class Preferences {
 
     public void setStringSet(Set<String> values) {
         SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(SET_VALUES);
+        editor.apply();
         editor.putStringSet(SET_VALUES, values);
+        editor.apply();
         editor.commit();
     }
 

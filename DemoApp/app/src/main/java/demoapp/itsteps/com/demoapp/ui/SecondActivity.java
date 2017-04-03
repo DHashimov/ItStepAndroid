@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.squareup.picasso.Callback;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +37,7 @@ public class SecondActivity extends AppCompatActivity {
             public void run() {
                 PicassoInstance.get(SecondActivity.this).with(SecondActivity.this)
                         .load(url)
-                        .into(imgCover, new com.squareup.picasso.Callback() {
+                        .into(imgCover, new Callback() {
 
                             @Override
                             public void onSuccess() {
@@ -44,7 +47,7 @@ public class SecondActivity extends AppCompatActivity {
                             @Override
                             public void onError() {
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(SecondActivity.this, "There was an issue loading the image", Toast.LENGTH_SHORT);
+                                Toast.makeText(SecondActivity.this, "There was an issue loading the image", Toast.LENGTH_SHORT).show();
                             }
                         });
             }

@@ -37,8 +37,6 @@ public class EditActivity extends AppCompatActivity
     public static final String EXTRA_USER_PROFILE_DATA = "user_profile_data";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
     @Bind(R.id.nav_view)
     NavigationView navView;
     @Bind(R.id.drawer_layout)
@@ -79,13 +77,6 @@ public class EditActivity extends AppCompatActivity
         txtUserName = (TextView) navView.getHeaderView(0).findViewById(R.id.txt_user_name);
         txtAddress = (TextView) navView.getHeaderView(0).findViewById(R.id.txt_address);
         setSupportActionBar(toolbar);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);

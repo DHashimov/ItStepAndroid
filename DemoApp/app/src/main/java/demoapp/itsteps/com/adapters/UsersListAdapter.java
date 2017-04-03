@@ -64,12 +64,6 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.Recy
         holder.grpContainer.setTag(user);
     }
 
-    public void invalidate(List<User> fellowRiderModels) {
-        this.usersList = null;
-        this.usersList = new ArrayList<User>(fellowRiderModels);
-        notifyDataSetChanged();
-    }
-
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
@@ -77,10 +71,6 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.Recy
                 R.layout.item_ueser, viewGroup, false);
         RecyclerViewHolder listHolder = new RecyclerViewHolder(mainGroup);
         return listHolder;
-    }
-
-    public List<User> getUsersList() {
-        return usersList;
     }
 
     @Override

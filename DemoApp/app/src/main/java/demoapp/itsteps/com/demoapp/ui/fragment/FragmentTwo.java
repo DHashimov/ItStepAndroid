@@ -28,21 +28,5 @@ public class FragmentTwo extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initViews(view);
-    }
-
-    private void initViews(View view) {
-        FrameLayout container = (FrameLayout) view.findViewById(R.id.container);
-        Set<String> stringSet = Preferences.getInstance(getActivity()).getStringSet();
-        for (String string: stringSet) {
-            TextView txt = new TextView(getActivity());
-            txt.setText(string);
-            container.addView(txt);
-        }
-
-    }
 
 }
