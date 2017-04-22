@@ -39,6 +39,7 @@ public class ThirdActivity extends AppCompatActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(ThirdActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView
                 .setLayoutManager(layoutManager);
+        //init adapter
         adapter = new UsersListAdapter(ThirdActivity.this, generateListOfUsers(), new OnUserClickedCallback() {
             @Override
             public void onUserSelected(User user) {

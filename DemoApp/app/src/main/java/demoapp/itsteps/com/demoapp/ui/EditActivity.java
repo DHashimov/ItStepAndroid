@@ -60,9 +60,17 @@ public class EditActivity extends AppCompatActivity
             throw new IllegalArgumentException("You should provide the User info");
         } else {
             initViews();
-            FragmentOne fragment = new FragmentOne();
-            startFragment(fragment);
+            startProfileFragment();
         }
+    }
+
+    private void startProfileFragment() {
+        FragmentOne fragment = new FragmentOne();
+        User personal = new User("Deniz Hashimov" ,"West Park" ,"https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAALbAAAAJDI3MDBhNTRkLTY0YTktNDc1ZS1hODFmLWExYmFlZGYyN2FjMg.jpg" );
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_USER_PROFILE_DATA , personal);
+        fragment.setArguments(bundle);
+        startFragment(fragment);
     }
 
     private void startFragment(Fragment fragment) {
@@ -126,13 +134,13 @@ public class EditActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_item_one) {
             startFragment(new FragmentOne());
+            startProfileFragment();
         } else if (id == R.id.nav_item_two) {
             startFragment(new FragmentTwo());
         } else if (id == R.id.nav_item_three) {
             startFragment(new FragmentThree());
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
