@@ -2,6 +2,7 @@ package demoapp.itsteps.com.demoapp.ui.fragment;
 
 
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,11 +16,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Set;
+import java.util.List;
 
 import butterknife.ButterKnife;
+import demoapp.itsteps.com.db.adapters.NotesDatabaseAdapter;
+import demoapp.itsteps.com.db.models.Note;
 import demoapp.itsteps.com.demoapp.R;
-import demoapp.itsteps.com.utils.Preferences;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,15 +49,26 @@ public class FragmentThree extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews(view);
+        initViews();
         fab.setOnClickListener(this);
     }
 
-    private void initViews(View view) {
-        Set<String> stringSet = Preferences.getInstance(getActivity()).getStringSet();
-        for (String string : stringSet) {
-            addVisualNote(string);
-        }
+    private void initViews() {
+        new AsyncTask<Void, Void, List<Note>>() {
+
+            @Override
+            protected List<Note> doInBackground(Void... params) {
+                NotesDatabaseAdapter adapter = new NotesDatabaseAdapter(getContext());
+                return adapter.getNotes();
+            }
+
+            @Override
+            protected void onPostExecute(List<Note> notes) {
+                for (Note note : notes) {
+                    addVisualNote(note.getNote());
+                }
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
@@ -91,10 +104,23 @@ public class FragmentThree extends Fragment implements View.OnClickListener {
         builder.setPositiveButton(getString(R.string.add), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Set<String> notes = Preferences.getInstance(getActivity()).getStringSet();
-                notes.add(input.getText().toString());
-                Preferences.getInstance(getActivity()).setStringSet(notes);
-                addVisualNote(input.getText().toString());
+                new AsyncTask<Void, Void, String>() {
+                    public String noteText = input.getText().toString();
+
+                    @Override
+                    protected String doInBackground(Void... params) {
+                        Note note = new Note(noteText);
+                        NotesDatabaseAdapter adapter = new NotesDatabaseAdapter(getContext());
+                        adapter.insert(note);
+                        return noteText;
+                    }
+
+                    @Override
+                    protected void onPostExecute(String s) {
+                        super.onPostExecute(s);
+                        addVisualNote(s);
+                    }
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         builder.create().show();
