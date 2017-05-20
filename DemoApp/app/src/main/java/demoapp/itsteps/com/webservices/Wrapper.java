@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import demoapp.itsteps.com.callbacks.Callback;
+import demoapp.itsteps.com.callbacks.CheckForUpdateCallback;
 import demoapp.itsteps.com.models.UsersResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,6 +21,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 
 
@@ -81,10 +83,10 @@ public class Wrapper {
 
 
     /**
-     * Get the users which are followed by an user.
+     * Get the users from apiary - https://private-9d496-itstep.apiary-mock.com/itstep/users
      */
-    public void getUserFollowingList(final Callback<UsersResponse> callback) {
-        services.getUserFollowingList(CONTENT_TYPE).enqueue(new retrofit2.Callback<UsersResponse>() {
+    public void getUsersList(final Callback<UsersResponse> callback) {
+        services.getUsersList(CONTENT_TYPE).enqueue(new retrofit2.Callback<UsersResponse>() {
             @Override
             public void onResponse(Call<UsersResponse> call,
                                    Response<UsersResponse> response) {
@@ -102,13 +104,37 @@ public class Wrapper {
         });
     }
 
+    public void isUserListChanged(final CheckForUpdateCallback<Void> callback){
+        services.validateUser().enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
+                    callback.doValidation(true);
+                } else if(response.code() == 400){
+                    callback.doValidation(false);
+                }else {
+                    callback.onError("Error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onError("Error");
+            }
+        });
+    }
+
+
     /**
      * RetroFit's API description of the Server.
      */
     private interface Services {
 
         @GET("/itstep/users")
-        Call<UsersResponse> getUserFollowingList(@Header("Content-Type") String contentType);
+        Call<UsersResponse> getUsersList(@Header("Content-Type") String contentType);
+
+        @GET("/itstep/userschanges")
+        Call<Void> validateUser();
 
     }
 }

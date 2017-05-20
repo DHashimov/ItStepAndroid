@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Base database model
  */
-public abstract class Model implements Serializable, Parcelable {
+public abstract class Model implements Serializable{
 
     private long id;
 
@@ -21,16 +21,6 @@ public abstract class Model implements Serializable, Parcelable {
     }
 
     public Model() {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
     }
 
     protected Model(Parcel in) {

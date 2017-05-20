@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import demoapp.itsteps.com.db.adapters.NotesDatabaseAdapter;
+import demoapp.itsteps.com.db.adapters.UsersDatabaseAdapter;
 
 
 /**
@@ -42,6 +43,12 @@ public class DatabaseInstance {
         instance = null;
     }
 
+    public synchronized void dropTables(Context context) {
+        instance.deleteDatabase(context);
+        instance = new DatabaseInstance(context);
+        instance.open();
+    }
+
     private synchronized void open() throws SQLException {
         long attempts = 0;
         final long MAX_ATTEMPTS = 100;
@@ -76,7 +83,7 @@ public class DatabaseInstance {
     private class DatabaseHelper extends SQLiteOpenHelper {
 
         private static final String DATABASE_NAME = "demoapp.db";
-        private static final int DATABASE_VERSION = 1;
+        private static final int DATABASE_VERSION = 2;
 
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -95,6 +102,7 @@ public class DatabaseInstance {
 
         private void createTables(SQLiteDatabase db) {
             db.execSQL(NotesDatabaseAdapter.CREATE_TABLE_QUERY);
+            db.execSQL(UsersDatabaseAdapter.CREATE_TABLE_QUERY);
         }
 
         @Override
@@ -109,6 +117,7 @@ public class DatabaseInstance {
 
         protected void resetTables(SQLiteDatabase db) {
             db.execSQL(NotesDatabaseAdapter.DROP_TABLE_QUERY);
+            db.execSQL(UsersDatabaseAdapter.DROP_TABLE_QUERY);
             createTables(db);
         }
     }
