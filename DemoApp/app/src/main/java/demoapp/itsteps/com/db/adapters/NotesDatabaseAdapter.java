@@ -24,7 +24,6 @@ public class NotesDatabaseAdapter extends BaseDatabaseAdapter<Note> {
                     + ID + " INTEGER PRIMARY KEY, "
                     + NOTE + " TEXT)";
     public static final String DROP_TABLE_QUERY = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
-    private static final String TAG = "StoryPieceDatabase";
 
     public NotesDatabaseAdapter(Context context) {
         super(context);

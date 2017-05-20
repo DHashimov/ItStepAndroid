@@ -14,9 +14,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import demoapp.itsteps.com.adapters.UsersListAdapter;
+import demoapp.itsteps.com.callbacks.Callback;
 import demoapp.itsteps.com.callbacks.OnUserClickedCallback;
 import demoapp.itsteps.com.demoapp.R;
 import demoapp.itsteps.com.models.User;
+import demoapp.itsteps.com.models.UsersResponse;
+import demoapp.itsteps.com.webservices.Wrapper;
 
 public class ThirdActivity extends AppCompatActivity {
 
@@ -29,21 +32,37 @@ public class ThirdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
         ButterKnife.bind(this);
-        initRecyclerView();
+        loadUsers();
     }
+
+
+    private void loadUsers() {
+        Wrapper.getInstance(ThirdActivity.this).getUserFollowingList(new Callback<UsersResponse>() {
+            @Override
+            public void onSuccess(UsersResponse data) {
+                initRecyclerView(data.getUsers());
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ThirdActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     /**
      * Init the selectable followers list recycler view
      */
-    private void initRecyclerView() {
+    private void initRecyclerView(List<User> users) {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(ThirdActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView
                 .setLayoutManager(layoutManager);
         //init adapter
-        adapter = new UsersListAdapter(ThirdActivity.this, generateListOfUsers(), new OnUserClickedCallback() {
+        adapter = new UsersListAdapter(ThirdActivity.this, users, new OnUserClickedCallback() {
             @Override
             public void onUserSelected(User user) {
-                Intent intent = new Intent(ThirdActivity.this , ViewProfileActivity.class);
+                Intent intent = new Intent(ThirdActivity.this, ViewProfileActivity.class);
                 intent.putExtra(ViewProfileActivity.EXTRA_USER_PROFILE_DATA, user);
                 startActivity(intent);
             }
@@ -53,18 +72,18 @@ public class ThirdActivity extends AppCompatActivity {
     }
 
 
-    private List<User> generateListOfUsers() {
-        List<User> list = new ArrayList<>();
-        String[] userName = {"Ivan Petrov", "Georgi Dimitrov", "Kiril Iliev"};
-        String[] userAddres = {"this is the address of the user 1", "this is the address of the user 2", "this is the address of the user 3"};
-        String[] userAvatars = {"https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAALbAAAAJDI3MDBhNTRkLTY0YTktNDc1ZS1hODFmLWExYmFlZGYyN2FjMg.jpg",
-                "http://top-10-list.org/wp-content/uploads/2013/04/Rowan-Atkinson.jpg", "http://cdn.redmondpie.com/wp-content/uploads/2011/07/zuckerberg.jpg"};
-        for (int i = 0; i <= 100; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(0, 3);
-            User user = new User(userName[randomNum], userAddres[randomNum], userAvatars[randomNum]);
-            list.add(user);
-        }
-        return list;
-    }
+//    private List<User> generateListOfUsers() {
+//        List<User> list = new ArrayList<>();
+//        String[] userName = {"Ivan Petrov", "Georgi Dimitrov", "Kiril Iliev"};
+//        String[] userAddres = {"this is the address of the user 1", "this is the address of the user 2", "this is the address of the user 3"};
+//        String[] userAvatars = {"https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAALbAAAAJDI3MDBhNTRkLTY0YTktNDc1ZS1hODFmLWExYmFlZGYyN2FjMg.jpg",
+//                "http://top-10-list.org/wp-content/uploads/2013/04/Rowan-Atkinson.jpg", "http://cdn.redmondpie.com/wp-content/uploads/2011/07/zuckerberg.jpg"};
+//        for (int i = 0; i <= 100; i++) {
+//            int randomNum = ThreadLocalRandom.current().nextInt(0, 3);
+//            User user = new User(userName[randomNum], userAddres[randomNum], userAvatars[randomNum]);
+//            list.add(user);
+//        }
+//        return list;
+//    }
 
 }

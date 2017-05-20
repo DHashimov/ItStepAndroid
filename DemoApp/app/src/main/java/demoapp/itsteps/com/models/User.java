@@ -3,13 +3,18 @@ package demoapp.itsteps.com.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by dhashimov on 3/30/17.
  */
 
 public class User implements Parcelable {
+    @SerializedName("username")
     private String userName;
+    @SerializedName("address")
     private String userAddress;
+    @SerializedName("avatar")
     private String userAvatarUrl;
 
     public User(String userName, String userAddress, String userAvatarUrl) {
