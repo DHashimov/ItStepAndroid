@@ -3,6 +3,7 @@ package demoapp.itsteps.com.demoapp.ui.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import butterknife.ButterKnife;
@@ -59,8 +62,8 @@ public class FragmentThree extends Fragment implements View.OnClickListener {
 
     }
 
-    private void addVisualNote(String string) {
-        TextView txt = new TextView(getActivity());
+    private void addVisualNote(final String string) {
+        final TextView txt = new TextView(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -68,7 +71,78 @@ public class FragmentThree extends Fragment implements View.OnClickListener {
         txt.setLayoutParams(lp);
         txt.setGravity(Gravity.CENTER);
         txt.setText(string);
+        txt.setOnClickListener(getListener(string, txt));
         grpContainer.addView(txt);
+    }
+
+    @NonNull
+    private View.OnClickListener getListener(final String string, final TextView txt) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Edit Note");
+                final EditText input = new EditText(getActivity());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        getResources().getDimensionPixelOffset(R.dimen.clickable_cell_height));
+                input.setLayoutParams(lp);
+                input.setText(string);
+                builder.setView(input);
+                builder.setPositiveButton("Edit", getPositiveListener(input, string, txt));
+                builder.setNegativeButton("Delete", getNegativeListener(string, txt));
+                builder.create().show();
+            }
+
+        };
+    }
+
+    @NonNull
+    private DialogInterface.OnClickListener getNegativeListener(final String string, final TextView txt) {
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Iterator<String> iterator = getStringIterator();
+                Set<String> newSet = new HashSet<String>();
+                while (iterator.hasNext()){
+                    String text = iterator.next();
+                    if(text.equals(string)){
+                    }else {
+                        newSet.add(text);
+                    }
+                }
+                grpContainer.removeView(txt);
+                Preferences.getInstance(getActivity()).setStringSet(newSet);
+            }
+        };
+    }
+
+    @NonNull
+    private DialogInterface.OnClickListener getPositiveListener(final EditText input, final String string, final TextView txt) {
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Iterator<String> iterator = getStringIterator();
+                Set<String> newSet = new HashSet<String>();
+                while (iterator.hasNext()){
+                    String text = iterator.next();
+                    if(text.equals(string)){
+                        newSet.add(input.getText().toString());
+                    }else {
+                        newSet.add(text);
+                    }
+                }
+                grpContainer.removeView(txt);
+                addVisualNote(input.getText().toString());
+                Preferences.getInstance(getActivity()).setStringSet(newSet);
+            }
+        };
+    }
+
+    @NonNull
+    private Iterator<String> getStringIterator() {
+        Set<String> notes = Preferences.getInstance(getActivity()).getStringSet();
+        return notes.iterator();
     }
 
 

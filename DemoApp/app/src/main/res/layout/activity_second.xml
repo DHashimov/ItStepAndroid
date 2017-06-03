@@ -37,18 +37,18 @@
             </RelativeLayout>
 
 
-            <TextView android:layout_width="match_parent"
+            <TextView android:id="@+id/textView"
+                      android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:padding="@dimen/start_end_padding"
-                      android:text="@string/vulcanos_information"/>
+                      android:padding="@dimen/start_end_padding" android:text="@string/vulcanos_information"/>
 
             <Button
-                android:layout_marginTop="@dimen/start_end_padding"
-                android:layout_gravity="center"
                 android:id="@+id/btn_next"
                 android:layout_width="@dimen/btn_width"
-                android:layout_marginBottom="20dp"
                 android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="@dimen/start_end_padding"
                 android:text="@string/btn_next_label"/>
 
         </LinearLayout>

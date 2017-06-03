@@ -66,9 +66,8 @@ public class EditActivity extends AppCompatActivity
 
     private void startProfileFragment() {
         FragmentOne fragment = new FragmentOne();
-        User personal = new User("Deniz Hashimov" ,"West Park" ,"https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAALbAAAAJDI3MDBhNTRkLTY0YTktNDc1ZS1hODFmLWExYmFlZGYyN2FjMg.jpg" );
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRA_USER_PROFILE_DATA , personal);
+        bundle.putParcelable(EXTRA_USER_PROFILE_DATA , user);
         fragment.setArguments(bundle);
         startFragment(fragment);
     }
@@ -133,7 +132,6 @@ public class EditActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_item_one) {
-            startFragment(new FragmentOne());
             startProfileFragment();
         } else if (id == R.id.nav_item_two) {
             startFragment(new FragmentTwo());

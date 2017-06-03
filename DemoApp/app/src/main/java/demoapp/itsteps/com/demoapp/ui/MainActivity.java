@@ -17,6 +17,7 @@ public class MainActivity extends Activity {
 
     private TextView txtHellow;
     private Button btnClick;
+    private Button btnDecrease;
     private Button btnNext;
     private int counter = 0;
 
@@ -32,6 +33,14 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 txtHellow.setText(""+counter);
                 counter++;
+            }
+        });
+        btnDecrease = (Button) findViewById(R.id.btn_decrease);
+        btnDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtHellow.setText(""+counter);
+                counter--;
             }
         });
         btnNext = (Button) findViewById(R.id.btn_next);
